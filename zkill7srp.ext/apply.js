@@ -1,5 +1,4 @@
 function sev3ranceSRP(options) {
-//  console.log("sev3ranceSRP");
   function getElementByXpath(path) {
     return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
   }
@@ -72,7 +71,8 @@ function sev3ranceSRP(options) {
   parentElement.insertBefore(formElement, parentElement.firstChild);
 
   function applyForSRP() {
-    var filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSewuizATw-4rEnS2tNnG-abdWplIj8TVWgD5wVirDB60Ub13A/viewform?' +
+//    var filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSewuizATw-4rEnS2tNnG-abdWplIj8TVWgD5wVirDB60Ub13A/viewform?' +
+      var filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSf8xk70lcZiMtwC5eljXkv4Tn9s8uL64Lw355445NlK8Aulrg/viewform?' +
                            'usp=pp_url' + '&' +
                            'entry.1388419113={0}' + '&' + // pilot name
                            'entry.1920574619={1}' + '&' + // kill mail
@@ -80,6 +80,7 @@ function sev3ranceSRP(options) {
                            'entry.541327189={3}' + '&' + // fc
                            'entry.344009997={4}' + '&' + // op type
                            'entry.1236858744={5}' + '&' +  // loss
+//                           'entry.1912715229=...' + '&' + // comments
                            'entry.977449600={6}' + '&' +  // CTA?
                            'entry.1260941969={7}' + '&' + // CTA?
                            'entry.1462936448={8}'; // time
