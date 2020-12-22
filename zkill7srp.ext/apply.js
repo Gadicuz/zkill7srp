@@ -5,8 +5,12 @@ function sev3ranceSRP(options) {
   var parentXPath = '/html/body/div[1]/div[2]/span/div[3]';
   var pilotXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[1]/tbody/tr/td[3]/a[1]';
   var shipXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[1]/td/a';
-  var totalXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[10]/td/strong';
+  var relatedXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[2]/th';
   var timeXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[4]/td';
+  
+  var related = getElementByXpath(relatedXPath).innerHTML;
+  var totalXPath = related != 'Related:' ? '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[10]/td/strong'
+                                         : '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[11]/td/strong';
 
   names = options.names.split(/\r?\n/);
   var pilotName = getElementByXpath(pilotXPath).innerHTML
