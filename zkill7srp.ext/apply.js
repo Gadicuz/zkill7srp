@@ -3,22 +3,30 @@ function sev3ranceSRP(options) {
     return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
   }
   var parentXPath = '/html/body/div[1]/div[2]/span/div[3]';
-  var pilotXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[1]/tbody/tr/td[3]/a[1]';
-  var shipXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[1]/td/a';
-  var relatedXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[2]/th';
-  var timeXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[4]/td';
-  
-  var related = getElementByXpath(relatedXPath).innerHTML;
-  var totalXPath = related != 'Related:' ? '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[10]/td/strong'
-                                         : '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div/table[2]/tbody/tr[11]/td/strong';
+  var tablesXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div';
+  var pilotXPath = tablesXPath + '/table[1]/tbody/tr/td[3]/a[1]';
+  var dataXPath = tablesXPath + '/table[2]/tbody'
+  var shipXPath = dataXPath + '/tr[1]/td/a';
+  var relatedXPath = dataXPath + '/tr[2]/th';
+  var related = getElementByXpath(relatedXPath).innerHTML == 'Related:';
+  var timeXPath = dataXPath + (related ? '/tr[5]/td' : '/tr[4]/td');
+  var totalXPath = dataXPath + (related ? '/tr[11]/td/strong' : '/tr[10]/td/strong');
+
+  var timeOfKill = getElementByXpath(timeXPath).innerHTML;
+  var killdate = Date.parse(timeOfKill);
+  if (isNaN(killdate)) return; // bad date
+  var now = Date.now();
+  if (now - killdate > 35*24*60*60*1000) return; // too old
+//  var milestone = new Date('January 1, 2021 00:00:00');
+//  if (now >= milestone && milestone > killdate) return; // after Jan 1, 2021 only
 
   names = options.names.split(/\r?\n/);
   var pilotName = getElementByXpath(pilotXPath).innerHTML
   if (names.indexOf(pilotName) < 0) return;
+
   var killmailLink = window.location.href
   var shipType = getElementByXpath(shipXPath).innerHTML
   var totalLoss = getElementByXpath(totalXPath).innerHTML
-  var timeOfKill = getElementByXpath(timeXPath).innerHTML
 
   var parentElement = getElementByXpath(parentXPath);
 
