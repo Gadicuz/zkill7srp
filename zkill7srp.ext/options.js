@@ -26,6 +26,13 @@ function restore_options() {
     document.getElementById('keeptrack').checked = items.keeptrack;
   });
 }
+
+function clear_history() {
+  chrome.storage.sync.remove('applied');
+}
+
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click',
     save_options);
+document.getElementById('clear').addEventListener('click',
+    clear_history);
