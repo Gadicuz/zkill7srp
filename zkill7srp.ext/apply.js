@@ -31,7 +31,7 @@ function sev3ranceSRP(options) {
   const id = killmailLink.split('/').slice(-2)[0];
   if (id in options.applied) {
     srpDiv.classList.add("alert", "alert-success");
-    srpDiv.innerText = '-7- SRP request is already submitted';
+    srpDiv.innerHTML = '<center>-7- SRP request is already submitted</center>';
     return;
   }
   // remove outdated
@@ -49,7 +49,8 @@ function sev3ranceSRP(options) {
     '    <input class="form-control" required type="text" name="srp_fleet_commander" placeholder="Fleet commander name">' +
     '  </div>' +
     '  <div class="form-group">' +
-    '    <select class="form-control" required name="srp_operation_type" title="Select operation type...">' +
+    '    <select class="form-control" required name="srp_operation_type">' +
+    '      <option selected value="">Choose operation type...</option>' +
     '      <option value="Defense  Fleet">Defense Fleet</option>' +
     '      <option value="Roam">Roam</option>' +
     '      <option value="Coalition Operation">Coalition Operation</option>' +
@@ -57,7 +58,7 @@ function sev3ranceSRP(options) {
     '      <option value="CTA">CTA for -7- structure defense</option>' +
     '    </select>' +
     '  </div>' +
-    '  <input class="btn btn-primary" type="submit" value="Apply for -7- SRP">' +
+    '  <center><button class="btn btn-primary btn-block" type="submit"><b>Apply for -7- SRP</b></button></center>' +
     '</form>';
 
   srpDiv.firstChild.addEventListener("submit", function() {
