@@ -1,13 +1,13 @@
 function save_options() {
-  var names = document.getElementById('pilots').value;
-  var oneclick = document.getElementById('oneclickapply').checked;
-  var keeptrack = document.getElementById('keeptrack').checked;
+  const names = document.getElementById('pilots').value;
+  const oneclick = document.getElementById('oneclickapply').checked;
+  const keeptrack = document.getElementById('keeptrack').checked;
   chrome.storage.sync.set({
     names: names,
     oneclick: oneclick,
     keeptrack: keeptrack
   }, function() {
-    var status = document.getElementById('status');
+    const status = document.getElementById('status');
     status.textContent = 'Options saved.';
     setTimeout(function() {
       status.textContent = '';

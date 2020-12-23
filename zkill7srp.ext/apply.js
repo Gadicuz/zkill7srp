@@ -2,36 +2,36 @@ function sev3ranceSRP(options) {
   function getElementByXpath(path) {
     return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
   }
-  var parentXPath = '/html/body/div[1]/div[2]/span/div[3]';
-  var tablesXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div';
-  var pilotXPath = tablesXPath + '/table[1]/tbody/tr/td[3]/a[1]';
-  var dataXPath = tablesXPath + '/table[2]/tbody'
-  var shipXPath = dataXPath + '/tr[1]/td/a';
-  var relatedXPath = dataXPath + '/tr[2]/th';
-  var related = getElementByXpath(relatedXPath).innerHTML == 'Related:';
-  var timeXPath = dataXPath + (related ? '/tr[5]/td' : '/tr[4]/td');
-  var totalXPath = dataXPath + (related ? '/tr[11]/td/strong' : '/tr[10]/td/strong');
+  const parentXPath = '/html/body/div[1]/div[2]/span/div[3]';
+  const tablesXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div';
+  const pilotXPath = tablesXPath + '/table[1]/tbody/tr/td[3]/a[1]';
+  const dataXPath = tablesXPath + '/table[2]/tbody'
+  const shipXPath = dataXPath + '/tr[1]/td/a';
+  const relatedXPath = dataXPath + '/tr[2]/th';
+  const related = getElementByXpath(relatedXPath).innerHTML == 'Related:';
+  const timeXPath = dataXPath + (related ? '/tr[5]/td' : '/tr[4]/td');
+  const totalXPath = dataXPath + (related ? '/tr[11]/td/strong' : '/tr[10]/td/strong');
 
 
-  var maxAge = 35*24*60*60*1000;
-  var timeOfKill = getElementByXpath(timeXPath).innerHTML;
-  var killdate = Date.parse(timeOfKill);
+  const maxAge = 35*24*60*60*1000;
+  const timeOfKill = getElementByXpath(timeXPath).innerHTML;
+  const killdate = Date.parse(timeOfKill);
   if (isNaN(killdate)) return; // bad date
-  var now = Date.now();
+  const now = Date.now();
   if (now - killdate > maxAge) return; // too old
-//  var milestone = new Date('January 1, 2021 00:00:00');
+//  const milestone = new Date('January 1, 2021 00:00:00');
 //  if (now >= milestone && milestone > killdate) return; // after Jan 1, 2021 only
 
-  names = options.names.split(/\r?\n/);
-  var pilotName = getElementByXpath(pilotXPath).innerHTML
+  const names = options.names.split(/\r?\n/);
+  const pilotName = getElementByXpath(pilotXPath).innerHTML
   if (names.indexOf(pilotName) < 0) return;
 
-  var killmailLink = window.location.href
+  const killmailLink = window.location.href
 
-  var parentElement = getElementByXpath(parentXPath);
-  var formElement = document.createElement("div");
+  const parentElement = getElementByXpath(parentXPath);
+  const formElement = document.createElement("div");
 
-  var id = killmailLink.split('/').slice(-2)[0];
+  const id = killmailLink.split('/').slice(-2)[0];
   if (id in options.applied) {
     formElement.classList.add("alert", "alert-success");
     formElement.innerHTML = '-7- SRP request is already submitted';
@@ -46,23 +46,23 @@ function sev3ranceSRP(options) {
   // add new kill
   options.applied[id] = killdate;
 
-  var shipType = getElementByXpath(shipXPath).innerHTML
-  var totalLoss = getElementByXpath(totalXPath).innerHTML
+  const shipType = getElementByXpath(shipXPath).innerHTML
+  const totalLoss = getElementByXpath(totalXPath).innerHTML
 
   formElement.classList.add("alert", "alert-warning"); // -success -danger -info
 
-  var form = document.createElement("form");
+  const form = document.createElement("form");
   form.classList.add('form');
   form.setAttribute('onsubmit', "return false");
   form.addEventListener("submit", applyForSRP);
 
-  var group1 = document.createElement("div");
+  const group1 = document.createElement("div");
   group1.classList.add('form-group');
 
-  var group2 = document.createElement("div");
+  const group2 = document.createElement("div");
   group2.classList.add('form-group');
 
-  var fc = document.createElement("input");
+  const fc = document.createElement("input");
   fc.classList.add('form-control');
   fc.setAttribute('type',"text");
   fc.setAttribute('name',"fleet_commander");
@@ -70,12 +70,12 @@ function sev3ranceSRP(options) {
   fc.setAttribute('placeholder',"Fleet commander name");
 
   function option(text, val) {
-    var o = document.createElement("option");
+    const o = document.createElement("option");
     o.setAttribute('value',val);
     o.innerHTML = text;
     return o;
   }
-  var op = document.createElement("select");
+  const op = document.createElement("select");
   op.classList.add('form-control');
   op.setAttribute('name',"operation_type");
   op.setAttribute('required',"");
@@ -86,7 +86,7 @@ function sev3ranceSRP(options) {
   op.appendChild(option('CTA for -7- TCU/IHUB defense', 'CTA'));
   op.appendChild(option('CTA for -7- structure defense', 'CTA'));
 
-  var s = document.createElement("input");
+  const s = document.createElement("input");
   s.setAttribute('type',"submit");
   s.setAttribute('value',"Apply for -7- SRP");
   s.classList.add("btn", "btn-primary");
@@ -101,8 +101,8 @@ function sev3ranceSRP(options) {
   parentElement.insertBefore(formElement, parentElement.firstChild);
 
   function applyForSRP() {
-//    var filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSewuizATw-4rEnS2tNnG-abdWplIj8TVWgD5wVirDB60Ub13A/viewform?' +
-      var filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSf8xk70lcZiMtwC5eljXkv4Tn9s8uL64Lw355445NlK8Aulrg/viewform?' +
+//    const filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSewuizATw-4rEnS2tNnG-abdWplIj8TVWgD5wVirDB60Ub13A/viewform?' +
+      const filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSf8xk70lcZiMtwC5eljXkv4Tn9s8uL64Lw355445NlK8Aulrg/viewform?' +
                            'usp=pp_url&' +
                            'entry.1388419113={name}&' +
                            'entry.1920574619={killid}&' +
@@ -115,7 +115,7 @@ function sev3ranceSRP(options) {
                            'entry.1260941969={cta2}&' +
                            'entry.1462936448={time}';
 
-    var url = filledSRPFormURL;
+    let url = filledSRPFormURL;
 
     if (options.oneclick) {
       url = url.replace('viewform', 'formResponse');
@@ -130,7 +130,7 @@ function sev3ranceSRP(options) {
     url = url.replace('{total}', encodeURIComponent(totalLoss.split(' ')[0]));
     url = url.replace('{time}', encodeURIComponent(timeOfKill));
     url = url.replace('{optype}', encodeURIComponent(op.value));
-    var isCTA = encodeURIComponent(op.value == 'CTA' ? "Yes" : "No");
+    const isCTA = encodeURIComponent(op.value == 'CTA' ? "Yes" : "No");
     url = url.replace('{cta1}', isCTA);
     url = url.replace('{cta2}', isCTA);
 
