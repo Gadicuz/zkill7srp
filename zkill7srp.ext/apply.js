@@ -12,11 +12,13 @@ function sev3ranceSRP(options) {
   var timeXPath = dataXPath + (related ? '/tr[5]/td' : '/tr[4]/td');
   var totalXPath = dataXPath + (related ? '/tr[11]/td/strong' : '/tr[10]/td/strong');
 
+
+  var maxAge = 35*24*60*60*1000;
   var timeOfKill = getElementByXpath(timeXPath).innerHTML;
   var killdate = Date.parse(timeOfKill);
   if (isNaN(killdate)) return; // bad date
   var now = Date.now();
-  if (now - killdate > 35*24*60*60*1000) return; // too old
+  if (now - killdate > maxAge) return; // too old
 //  var milestone = new Date('January 1, 2021 00:00:00');
 //  if (now >= milestone && milestone > killdate) return; // after Jan 1, 2021 only
 
@@ -25,12 +27,28 @@ function sev3ranceSRP(options) {
   if (names.indexOf(pilotName) < 0) return;
 
   var killmailLink = window.location.href
+
+  var parentElement = getElementByXpath(parentXPath);
+  var formElement = document.createElement("div");
+
+  var id = killmailLink.split('/').slice(-2)[0];
+  if (id in options.applied) {
+    formElement.classList.add("alert", "alert-success");
+    formElement.innerHTML = '-7- SRP request is already submitted';
+    parentElement.insertBefore(formElement, parentElement.firstChild);
+    return;
+  }
+  // remove outdated
+  Object.entries(options.applied)
+    .filter(([,ts]) => now-ts > maxAge)
+    .map(([id,]) => id)
+    .forEach(id => delete options.applied[id]);
+  // add new kill
+  options.applied[id] = killdate;
+
   var shipType = getElementByXpath(shipXPath).innerHTML
   var totalLoss = getElementByXpath(totalXPath).innerHTML
 
-  var parentElement = getElementByXpath(parentXPath);
-
-  var formElement = document.createElement("div");
   formElement.classList.add("alert", "alert-warning"); // -success -danger -info
 
   var form = document.createElement("form");
@@ -70,7 +88,7 @@ function sev3ranceSRP(options) {
 
   var s = document.createElement("input");
   s.setAttribute('type',"submit");
-  s.setAttribute('value',"Apply for SRP");
+  s.setAttribute('value',"Apply for -7- SRP");
   s.classList.add("btn", "btn-primary");
 
   group1.appendChild(fc);
@@ -116,13 +134,19 @@ function sev3ranceSRP(options) {
     url = url.replace('{6}', isCTA);
     url = url.replace('{7}', isCTA);
 
+    if (options.keeptrack) {
+      chrome.storage.sync.set({ applied: options.applied });
+    }
+    
     window.location.href = url;
   }
 }
 
 chrome.storage.sync.get({
   names: '',
-  oneclick: false
+  oneclick: false,
+  keeptrack: false,
+  applied: {}
 }, function(options) {
   sev3ranceSRP(options);
 });

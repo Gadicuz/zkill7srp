@@ -1,12 +1,12 @@
-// Saves options to chrome.storage
 function save_options() {
   var names = document.getElementById('pilots').value;
   var oneclick = document.getElementById('oneclickapply').checked;
+  var keeptrack = document.getElementById('keeptrack').checked;
   chrome.storage.sync.set({
     names: names,
-    oneclick: oneclick
+    oneclick: oneclick,
+    keeptrack: keeptrack
   }, function() {
-    // Update status to let user know options were saved.
     var status = document.getElementById('status');
     status.textContent = 'Options saved.';
     setTimeout(function() {
@@ -15,15 +15,15 @@ function save_options() {
   });
 }
 
-// Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
 function restore_options() {
   chrome.storage.sync.get({
     names: '',
-    oneclick: false
+    oneclick: false,
+    keeptrack: false
   }, function(items) {
     document.getElementById('pilots').value = items.names;
     document.getElementById('oneclickapply').checked = items.oneclick;
+    document.getElementById('keeptrack').checked = items.keeptrack;
   });
 }
 document.addEventListener('DOMContentLoaded', restore_options);
