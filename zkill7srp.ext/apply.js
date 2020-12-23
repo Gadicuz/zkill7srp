@@ -8,13 +8,13 @@ function sev3ranceSRP(options) {
   const dataXPath = tablesXPath + '/table[2]/tbody'
   const shipXPath = dataXPath + '/tr[1]/td/a';
   const relatedXPath = dataXPath + '/tr[2]/th';
-  const related = getElementByXpath(relatedXPath).innerHTML == 'Related:';
+  const related = getElementByXpath(relatedXPath).innerText == 'Related:';
   const timeXPath = dataXPath + (related ? '/tr[5]/td' : '/tr[4]/td');
-  const totalXPath = dataXPath + (related ? '/tr[11]/td/strong' : '/tr[10]/td/strong');
+  const totalXPath = dataXPath + (related ? '/tr[11]/td' : '/tr[10]/td');
 
 
   const maxAge = 35*24*60*60*1000;
-  const timeOfKill = getElementByXpath(timeXPath).innerHTML;
+  const timeOfKill = getElementByXpath(timeXPath).innerText;
   const killdate = Date.parse(timeOfKill);
   if (isNaN(killdate)) return; // bad date
   const now = Date.now();
@@ -23,7 +23,7 @@ function sev3ranceSRP(options) {
 //  if (now >= milestone && milestone > killdate) return; // after Jan 1, 2021 only
 
   const names = options.names.split(/\r?\n/);
-  const pilotName = getElementByXpath(pilotXPath).innerHTML
+  const pilotName = getElementByXpath(pilotXPath).innerText
   if (names.indexOf(pilotName) < 0) return;
 
   const killmailLink = window.location.href
@@ -34,7 +34,7 @@ function sev3ranceSRP(options) {
   const id = killmailLink.split('/').slice(-2)[0];
   if (id in options.applied) {
     formElement.classList.add("alert", "alert-success");
-    formElement.innerHTML = '-7- SRP request is already submitted';
+    formElement.innerText = '-7- SRP request is already submitted';
     parentElement.insertBefore(formElement, parentElement.firstChild);
     return;
   }
@@ -46,8 +46,8 @@ function sev3ranceSRP(options) {
   // add new kill
   options.applied[id] = killdate;
 
-  const shipType = getElementByXpath(shipXPath).innerHTML
-  const totalLoss = getElementByXpath(totalXPath).innerHTML
+  const shipType = getElementByXpath(shipXPath).innerText
+  const totalLoss = getElementByXpath(totalXPath).innerText
 
   formElement.classList.add("alert", "alert-warning"); // -success -danger -info
 
@@ -72,7 +72,7 @@ function sev3ranceSRP(options) {
   function option(text, val) {
     const o = document.createElement("option");
     o.setAttribute('value',val);
-    o.innerHTML = text;
+    o.innerText = text;
     return o;
   }
   const op = document.createElement("select");
