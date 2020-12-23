@@ -2,7 +2,7 @@
   "manifest_version": 2,
  
   "name": "-7- SRP",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Adds 'Apply for -7- SRP' button for a loss on zkillboard",
  
   "icons": { "16": "logo16.png",

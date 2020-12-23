@@ -103,17 +103,17 @@ function sev3ranceSRP(options) {
   function applyForSRP() {
 //    var filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSewuizATw-4rEnS2tNnG-abdWplIj8TVWgD5wVirDB60Ub13A/viewform?' +
       var filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSf8xk70lcZiMtwC5eljXkv4Tn9s8uL64Lw355445NlK8Aulrg/viewform?' +
-                           'usp=pp_url' + '&' +
-                           'entry.1388419113={0}' + '&' + // pilot name
-                           'entry.1920574619={1}' + '&' + // kill mail
-                           'entry.738739111={2}' + '&' + // ship
-                           'entry.541327189={3}' + '&' + // fc
-                           'entry.344009997={4}' + '&' + // op type
-                           'entry.1236858744={5}' + '&' +  // loss
-//                           'entry.1912715229=...' + '&' + // comments
-                           'entry.977449600={6}' + '&' +  // CTA?
-                           'entry.1260941969={7}' + '&' + // CTA?
-                           'entry.1462936448={8}'; // time
+                           'usp=pp_url&' +
+                           'entry.1388419113={name}&' +
+                           'entry.1920574619={killid}&' +
+                           'entry.738739111={ship}&' +
+                           'entry.541327189={fc}&' +
+                           'entry.344009997={optype}&' +
+                           'entry.1236858744={total}&' +
+//                           'entry.1912715229={comment}&' +
+                           'entry.977449600={cta1}&' +
+                           'entry.1260941969={cta2}&' +
+                           'entry.1462936448={time}';
 
     var url = filledSRPFormURL;
 
@@ -123,16 +123,16 @@ function sev3ranceSRP(options) {
       url = url + '&' + 'submit=Submit';
     }
 
-    url = url.replace('{0}', encodeURIComponent(pilotName));
-    url = url.replace('{1}', encodeURIComponent(killmailLink));
-    url = url.replace('{2}', encodeURIComponent(shipType));
-    url = url.replace('{3}', encodeURIComponent(fc.value));
-    url = url.replace('{5}', encodeURIComponent(totalLoss.split(' ')[0]));
-    url = url.replace('{8}', encodeURIComponent(timeOfKill));
-    url = url.replace('{4}', encodeURIComponent(op.value));
+    url = url.replace('{name}', encodeURIComponent(pilotName));
+    url = url.replace('{killid}', encodeURIComponent(killmailLink));
+    url = url.replace('{ship}', encodeURIComponent(shipType));
+    url = url.replace('{fc}', encodeURIComponent(fc.value));
+    url = url.replace('{total}', encodeURIComponent(totalLoss.split(' ')[0]));
+    url = url.replace('{time}', encodeURIComponent(timeOfKill));
+    url = url.replace('{optype}', encodeURIComponent(op.value));
     var isCTA = encodeURIComponent(op.value == 'CTA' ? "Yes" : "No");
-    url = url.replace('{6}', isCTA);
-    url = url.replace('{7}', isCTA);
+    url = url.replace('{cta1}', isCTA);
+    url = url.replace('{cta2}', isCTA);
 
     if (options.keeptrack) {
       chrome.storage.sync.set({ applied: options.applied });
