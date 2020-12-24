@@ -1,3 +1,6 @@
+const allianceName = 'Sev3rance';
+const maxKillAge = 35; // days
+
 function sev3ranceSRP(options) {
   function getElementByXpath(path) {
     return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
@@ -12,7 +15,7 @@ function sev3ranceSRP(options) {
     .map((tr) => [tr.getElementsByTagName('th')[0].innerText, tr.getElementsByTagName('td')[0].innerText])
     .reduce((d, [k,v]) => { d[k.slice(0,-1)] = v; return d; }, {});
 
-  const maxAge = 35*24*60*60*1000;
+  const maxAge = maxKillAge*24*60*60*1000;
   const killtime = Date.parse(killInfo['Time']);
   if (isNaN(killtime)) return; // bad date
   const now = Date.now();
@@ -20,6 +23,7 @@ function sev3ranceSRP(options) {
 //  const milestone = new Date('January 1, 2021 00:00:00');
 //  if (now >= milestone && milestone > killtime) return; // after Jan 1, 2021 only
 
+  if (allianceName != pilotInfo[2]) return;
   const names = options.names.split(/\r?\n/).map((n) => n.toLowerCase());
   if (names.indexOf(pilotInfo[0].toLowerCase()) < 0) return;
 
