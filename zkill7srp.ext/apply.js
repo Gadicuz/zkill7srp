@@ -20,8 +20,8 @@ function sev3ranceSRP(options) {
 //  const milestone = new Date('January 1, 2021 00:00:00');
 //  if (now >= milestone && milestone > killtime) return; // after Jan 1, 2021 only
 
-  const names = options.names.split(/\r?\n/);
-  if (names.indexOf(pilotInfo[0]) < 0) return;
+  const names = options.names.split(/\r?\n/).map((n) => n.toLowerCase());
+  if (names.indexOf(pilotInfo[0].toLowerCase()) < 0) return;
 
   const srpDiv = document.createElement("div");
   const parentNode = getElementByXpath(parentXPath);
