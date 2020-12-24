@@ -62,45 +62,36 @@ function sev3ranceSRP(options) {
     '</form>';
 
   srpDiv.firstChild.addEventListener("submit", function() {
-//    const filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSewuizATw-4rEnS2tNnG-abdWplIj8TVWgD5wVirDB60Ub13A/viewform?' +
-      const filledSRPFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSf8xk70lcZiMtwC5eljXkv4Tn9s8uL64Lw355445NlK8Aulrg/viewform?' +
-                           'usp=pp_url&' +
-                           'entry.1388419113={name}&' +
-                           'entry.1920574619={killid}&' +
-                           'entry.738739111={ship}&' +
-                           'entry.541327189={fc}&' +
-                           'entry.344009997={optype}&' +
-                           'entry.1236858744={total}&' +
-//                           'entry.1912715229={comment}&' +
-                           'entry.977449600={cta1}&' +
-                           'entry.1260941969={cta2}&' +
-                           'entry.1462936448={time}';
-
-    let url = filledSRPFormURL;
-
-    if (options.oneclick) {
-      url = url.replace('viewform', 'formResponse');
-      url = url + '&' + 'pageHistory=0,1,2,3,4,5';
-      url = url + '&' + 'submit=Submit';
-    }
+    //const formURL = 'https://docs.google.com/forms/d/e/1FAIpQLSchifEv2MwCKYBmaEbGj8k4ANBo1VfJJQW1iKkXouw2wZGmew/';
+    const formURL = 'https://docs.google.com/forms/d/e/1FAIpQLSf8xk70lcZiMtwC5eljXkv4Tn9s8uL64Lw355445NlK8Aulrg/';
 
     const fcname = document.getElementsByName('srp_fleet_commander')[0].value;
     const optype = document.getElementsByName('srp_operation_type')[0].value;
-    const isCTA = encodeURIComponent(optype == 'CTA' ? "Yes" : "No");
-    url = url.replace('{name}', encodeURIComponent(pilotInfo[0]));
-    url = url.replace('{killid}', encodeURIComponent(killmailLink));
-    url = url.replace('{ship}', encodeURIComponent(killInfo['Ship'].split('(')[0].trim()));
-    url = url.replace('{fc}', encodeURIComponent(fcname));
-    url = url.replace('{total}', encodeURIComponent(killInfo['Total'].split(' ')[0]));
-    url = url.replace('{time}', encodeURIComponent(killInfo['Time']));
-    url = url.replace('{optype}', encodeURIComponent(optype));
-    url = url.replace('{cta1}', isCTA);
-    url = url.replace('{cta2}', isCTA);
+    const isCTA = optype == 'CTA';
 
+    const params = new URLSearchParams('usp=pp_url');
+    params.set('entry.1388419113', pilotInfo[0]);
+    params.set('entry.1920574619', killmailLink);
+    params.set('entry.738739111', killInfo['Ship'].split('(')[0].trim());
+    params.set('entry.541327189', fcname);
+    params.set('entry.344009997', optype);
+    params.set('entry.1236858744', killInfo['Total'].split(' ')[0]);
+//    params.set('entry.1912715229', <comment here>);
+    params.set('entry.1462936448', killInfo['Time']);
+    params.set('entry.977449600', isCTA ? "Yes" : "No");
+    params.set('entry.1260941969', isCTA ? "Yes" : "No");
+
+    if (options.oneclick) {
+      params.set('pageHistory', isCTA ? '0,1,2,3,5' : '0,1,-3');
+      params.set('submit', 'Submit');
+    }
+    
     if (options.keeptrack) {
       chrome.storage.sync.set({ applied: options.applied });
     }
     
+    const url = formURL + (options.oneclick ? 'formResponse' : 'viewform') + '?' + params.toString();
+
     window.location.href = url;
   });
 }
