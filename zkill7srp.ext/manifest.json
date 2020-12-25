@@ -23,12 +23,5 @@
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false
-  },
-
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "{2810b9f3-203a-4f85-8413-db78a33c5c9e}",
-      "strict_min_version": "57.0"
-    }
   }
 }
