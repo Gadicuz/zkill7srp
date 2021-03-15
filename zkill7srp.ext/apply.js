@@ -24,6 +24,7 @@ function sev3ranceSRP(options) {
 //  if (now >= milestone && milestone > killtime) return; // after Jan 1, 2021 only
 
   if (allianceName != pilotInfo[2]) return;
+  if (!pilotInfo[0]) return;
   const names = options.names.split(/\r?\n/).map((n) => n.toLowerCase());
   if (names.indexOf(pilotInfo[0].toLowerCase()) < 0) return;
 
