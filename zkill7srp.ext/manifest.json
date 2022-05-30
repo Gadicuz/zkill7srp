@@ -12,7 +12,7 @@
 
   "content_scripts": [{
     "js": ["apply.js"],
-    "matches": ["https://zkillboard.com/kill/*"]
+    "matches": ["https://zkillboard.com/*"]
   }],
 
   "permissions": [
