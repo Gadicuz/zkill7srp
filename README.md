@@ -16,7 +16,7 @@ Chrome extension adds 'Apply for -7- SRP' button for a loss on zkillboard
 4. Load unpacked directory of files.
 
 #### Firefox
-1. Download [sev3rance_srp-0.6.10-an+fx.xpi](https://github.com/Gadicuz/zkill7srp/raw/firefox/web-ext-artifacts/sev3rance_srp-0.6.10-an%2Bfx.xpi) from __firefox__ branch
+1. Download sev3rance_srp-X.X.X.xpi from __firefox__ branch
 2. Click Ctrl-O and navigate to the .XPI file you downloaded.
 
 ## How to setup
