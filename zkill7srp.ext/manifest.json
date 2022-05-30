@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
  
   "name": "-7- SRP",
   "description": "Adds 'Apply for -7- SRP' button for a loss on zkillboard",
@@ -16,7 +16,10 @@
   }],
 
   "permissions": [
-    "storage",
+    "storage"
+  ],
+
+  "host_permissions": [
     "https://docs.google.com/forms/*"
   ],
 
