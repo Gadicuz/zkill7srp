@@ -3,7 +3,7 @@
  
   "name": "-7- SRP",
   "description": "Adds 'Apply for -7- SRP' button for a loss on zkillboard",
-  "version": "0.7.13",
+  "version": "0.7.14",
   "author": "Sev3rance Holdings",
  
   "icons": { "16": "logo16.png",
