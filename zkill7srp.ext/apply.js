@@ -28,8 +28,9 @@ function sev3ranceSRP(options) {
   }
 
   function processKill() {
-    const parentXPath = '/html/body/div[1]/div[2]/span/div[3]';
-    const tablesXPath = '/html/body/div[1]/div[2]/span/div[2]/table/tbody/tr[1]/td[2]/div';
+    const contentXPath = '//span[contains(concat(" ", normalize-space(@class), " "), " pagecontent ")]';
+    const parentXPath = contentXPath + '/div[3]';
+    const tablesXPath = contentXPath + '/div[2]/table/tbody/tr[1]/td[2]/div';
     const pilotXPath = tablesXPath + '/table[1]/tbody';
     const infoXPath = tablesXPath + '/table[2]/tbody';
   
