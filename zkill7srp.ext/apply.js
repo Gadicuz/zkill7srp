@@ -72,7 +72,7 @@ function sev3ranceSRP(options) {
       '    <select class="form-control" required name="srp_operation_type">' +
       '      <option selected value="">Choose operation type...</option>' +
       '      <option value="Coalition Operation">Coalition Operation (Coalition CTA)</option>' +
-      '      <option value="Defense  Fleet">Defense Fleet</option>' +
+      '      <option value="Defense Fleet">Defense Fleet</option>' +
       '      <option value="Roam">Roam</option>' +
       '      <option value="CTA">-7- Structure/TCU/IHUB Defense (-7- CTA)</option>' +
       '    </select>' +
